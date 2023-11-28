@@ -14,6 +14,6 @@
 
   <div class="col-md-3 text-end">
     <a routerLink="login" routerLinkActive="active" class="link-secondary"><button id="loginBtn" type="button" class="btn btn-outline-primary me-2">Login</button></a>
-    <a routerLink="signup" routerLinkActive="active" class="link-secondary"><button id="signupBtn" type="button" class="btn btn-primary">Sign-up</button></a>
+    <a routerLink="signup" routerLinkActive="active" class="link-secondary"><button id="signupBtn" type="button" class="btn btn-primary" [disabled]="signupAvailable">Sign-up</button></a>
   </div>
 </header>

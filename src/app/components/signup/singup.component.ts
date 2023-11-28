@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn } from "@angular/forms";
 import { ApiClientService } from "src/app/apiclient-service";
 
@@ -30,8 +30,6 @@ export class SignupComponent {
 
   onSubmit() {
     const profile = this.profileForm.value
-    console.warn(profile)
-    let token = sessionStorage.getItem("token")
 
     if (profile["password"] !== profile["repeatPassword"]) {
       alert("Passwords are not the same.")
@@ -39,8 +37,20 @@ export class SignupComponent {
     }
 
     this.apiClient
-      .registerUser(this.profileForm.value, token ? token : "")
+      .registerUser(profile)
       .subscribe({complete: console.log});
     this.profileForm.reset();
+  }
+
+  onBlur() {
+    const profile = this.profileForm.value
+    const name = profile["name"]
+
+    if (name !== undefined && name !== "" && name !== null) {
+      this.apiClient.getUsername(name)
+        .subscribe(response => {
+          if (response.status === 200) alert("The username already exists. Change it.")
+        })
+    }
   }
 }
