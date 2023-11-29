@@ -1,0 +1,30 @@
+.game-board {
+  height: 85vh;
+  width: 100%;
+  min-width: 1300px;
+  position: relative;
+}
+
+.score-board {
+  position: absolute;
+  top: 65%;
+  left: 20px;
+  width: 150px;
+  height: 220px;
+  background-color: #ffcc0045;
+  border: 1px solid #999;
+  padding: 10px;
+}
+
+.missile {
+  position: absolute;
+  bottom: 10px;
+  height: 70px;
+  width: 40px;
+  z-index: 10;
+}
+
+.restart-button:hover {
+  background-color: #fff!important;
+  color: black!important;
+}

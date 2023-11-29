@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { AuthService } from "src/app/services/auth-service";
 
 @Component({
   selector: 'navigation-bar',
@@ -7,6 +8,15 @@ import { Component } from "@angular/core";
 })
 export class NavigationBarComponent {
   title = 'ufoGame';
-  token = sessionStorage.getItem("token")
-  signupAvailable = this.token === "" || this.token === undefined ? true : false;
+  token = sessionStorage.getItem('token');
+
+  constructor(public authService: AuthService) {}
+
+  ngOnInit() {
+    this.authService.authenticationChanged.subscribe();
+  }
+
+  logout() {
+    this.authService.logout();
+  }
 }

@@ -1,6 +1,7 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn } from "@angular/forms";
-import { ApiClientService } from "src/app/apiclient-service";
+import { Router } from "@angular/router";
+import { AuthService } from "src/app/services/auth-service";
 
 @Component({
   standalone: true,
@@ -9,10 +10,16 @@ import { ApiClientService } from "src/app/apiclient-service";
   styleUrls: [],
   imports: [ReactiveFormsModule],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   title = 'Login';
 
-  constructor(private apiClient: ApiClientService) { }
+  constructor(private authService: AuthService, private router: Router) { }
+
+  ngOnInit() {
+    this.authService.authenticationChanged.subscribe((isAuthenticated) => {
+      if (isAuthenticated) this.router.navigate(['/play']);
+    });
+  }
 
   forbiddenStringValidator = (nameRe: RegExp): ValidatorFn => {
     return (control: AbstractControl): ValidationErrors | null => {
@@ -27,15 +34,13 @@ export class LoginComponent {
   });
 
   onSubmit() {
-    const profile = this.profileForm.value
-
-    this.apiClient
-      .loginUser(profile)
-      .subscribe(value => {
-        sessionStorage.setItem('token', value.toString());
-        setTimeout(() => {
-          sessionStorage.removeItem('token');
-        }, 10 * 60 * 1000);
-      });
+    const profile = this.profileForm.value;
+    const name = profile["name"];
+    const passwd = profile["password"]
+    
+    if (name != null && passwd != null) {
+      this.authService.login(name, passwd);
+      this.profileForm.reset();
+    }
   }
 }

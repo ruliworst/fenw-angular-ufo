@@ -4,15 +4,20 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavigationBarComponent } from './components/nav/nav.component';
-import { HomeComponent } from './components/home/home.component';
-import { PreferencesComponent } from './components/preferences/preferences.component';
 import { HttpClientModule } from '@angular/common/http'
-import { ApiClientService } from './apiclient-service';
+import { ApiClientService } from './services/apiclient-service';
+import { PlayComponent } from './components/play/play.component';
+import { AppService } from './services/app-service';
+import { AuthService } from './services/auth-service';
+import { UfoComponent } from './components/ufo/ufo.component';
+import { PreferencesService } from './services/preferences-service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavigationBarComponent
+    NavigationBarComponent,
+    PlayComponent,
+    UfoComponent
   ],
   imports: [
     BrowserModule,
@@ -20,12 +25,13 @@ import { ApiClientService } from './apiclient-service';
     AppRoutingModule
   ],
   providers: [
-    ApiClientService
+    ApiClientService,
+    AppService,
+    AuthService,
+    PreferencesService
   ],
   bootstrap: [
     AppComponent, 
-    NavigationBarComponent, 
-    HomeComponent, 
-    PreferencesComponent]
+  ]
 })
 export class AppModule { }

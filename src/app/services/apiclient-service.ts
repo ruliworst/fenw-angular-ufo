@@ -30,10 +30,10 @@ export class ApiClientService {
       );
   }
 
-  loginUser(user: any) {
+  loginUser(name: string, password: string): Observable<any> {
     const params = new HttpParams()
-      .set("username", user["name"])
-      .set("password", user["password"]);
+      .set("username", name)
+      .set("password", password);
 
     return this.http.get(`${this.baseURL}/users/login`, { params });
   }
