@@ -1,12 +1,12 @@
 <div id="gameBoard" class="game-board">
-  <div *ngFor="let height of [0,50,100,150,200]">
-    <app-ufo [height]="height"></app-ufo>
+  <div *ngFor="let features of ufoFeatures">
+    <app-ufo [height]="features.height" [step]="features.step" [left]="features.left" [bottom]="features.bottom"></app-ufo>
   </div>
   <div id="scoreBoard" class="score-board d-flex flex-column align-items-center justify-content-center">
     <h4>Time left</h4>
-    <p id="time" class="fs-3">0</p>
+    <p id="time" class="fs-3">{{ time }}</p>
     <h4>Punctuation</h4>
-    <p id="punctuation" class="text-center rounded fs-4" style="background-color: #e3f2fd; width: 100px;">0</p>
+    <p id="punctuation" class="punctuation text-center rounded fs-4">{{ score }}</p>
   </div>
-  <img id="missile" src="../../../assets/missile.png" class="missile" style="left:700px;width:40px;bottom:5px"/>
+  <img id="missile" src="../../../assets/missile.png" class="missile" [style.left.px]="missileLeft" [style.bottom.px]="missileBottom"/>
 </div>

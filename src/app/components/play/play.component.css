@@ -1,7 +1,6 @@
 .game-board {
   height: 85vh;
   width: 100%;
-  min-width: 1300px;
   position: relative;
 }
 
@@ -27,4 +26,9 @@
 .restart-button:hover {
   background-color: #fff!important;
   color: black!important;
+}
+
+.punctuation {
+  background-color: #e3f2fd; 
+  width: 100px;
 }

@@ -1,5 +1,7 @@
 import { Component } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
+import { Router } from "@angular/router";
+import { PreferencesService } from "src/app/services/preferences-service";
 
 @Component({
   standalone: true,
@@ -10,9 +12,12 @@ import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 })
 export class PreferencesComponent {
   title = 'Preferences';
+
+  constructor(private preferencesService: PreferencesService, private router: Router) { }
+
   preferencesForm = new FormGroup({
-    ufosNumber: new FormControl(1),
-    time: new FormControl(60)
+    ufosNumber: new FormControl(this.preferencesService.ufosNumber),
+    time: new FormControl(this.preferencesService.playTime)
   });
 
   onSubmit() {
@@ -23,6 +28,7 @@ export class PreferencesComponent {
     if (ufosNumber != null && time != null) {
       localStorage.setItem('ufosNumber', ufosNumber.toString());
       localStorage.setItem('time', time.toString());
+      this.router.navigate(['/play']);
     }
   }
 
