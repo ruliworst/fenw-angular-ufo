@@ -11,13 +11,16 @@ import { AppService } from './services/app-service';
 import { AuthService } from './services/auth-service';
 import { UfoComponent } from './components/ufo/ufo.component';
 import { PreferencesService } from './services/preferences-service';
+import { MissileComponent } from './components/missile/missile.component';
+import { MissileService } from './services/missile-service';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavigationBarComponent,
     PlayComponent,
-    UfoComponent
+    UfoComponent,
+    MissileComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +31,8 @@ import { PreferencesService } from './services/preferences-service';
     ApiClientService,
     AppService,
     AuthService,
-    PreferencesService
+    PreferencesService,
+    MissileService
   ],
   bootstrap: [
     AppComponent, 

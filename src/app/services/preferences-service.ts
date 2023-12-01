@@ -1,4 +1,4 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
@@ -6,8 +6,6 @@ import { Injectable, EventEmitter } from '@angular/core';
 export class PreferencesService {
   private _ufosNumberKey = 'ufosNumber';
   private _playTimeKey = 'time';
-  ufosNumberChanged = new EventEmitter<number>();
-  playTimeChanged = new EventEmitter<number>();
 
   get ufosNumber(): number {
     let ufosNumberString = localStorage.getItem(this._ufosNumberKey);

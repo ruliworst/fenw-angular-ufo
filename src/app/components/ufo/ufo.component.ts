@@ -1,4 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Ufo } from 'src/app/models/ufo.model';
+import { PlayService } from 'src/app/services/play-service';
+import { PreferencesService } from 'src/app/services/preferences-service';
+import { UfoService } from 'src/app/services/ufo-service';
 
 @Component({
   selector: 'app-ufo',
@@ -6,29 +10,21 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./ufo.component.css']
 })
 export class UfoComponent implements OnInit {
-  @Input() height : number = 0;
-  @Input() left : number = 0;
-  @Input() step : number = 5;
-  @Input() bottom : number = 450;
-  width : number = 50;
-  moveUfoPID : any;
-  rightLimit = window.innerWidth;
+  intervals : any[] = [];
+
+  constructor(public ufoService : UfoService) { }
 
   ngOnInit(): void {
-    this.moveUfoPID = setInterval(() => this.moveUfo(), 25);
+    this.intervals = this.ufoService.ufos.map(ufo => setInterval(() => this.moveUfo(ufo), 25))
   }
 
-  moveUfo() {
+  moveUfo(ufo : Ufo) {
     const leftLimit = 0;
 
-    let hPosition = this.left;
-    const ufoWidth = this.width;
-
-    if (hPosition + ufoWidth > this.rightLimit || hPosition < leftLimit) {
-      this.step = this.step * (-1);
+    if (ufo.left + ufo.width > window.innerWidth || ufo.left < leftLimit) {
+      ufo.step = ufo.step * (-1);
     }
 
-    hPosition = hPosition + this.step;
-    this.left = hPosition;
+    ufo.left = ufo.left + ufo.step;
   }
 }

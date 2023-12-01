@@ -28,7 +28,7 @@ export class PreferencesComponent {
     if (ufosNumber != null && time != null) {
       localStorage.setItem('ufosNumber', ufosNumber.toString());
       localStorage.setItem('time', time.toString());
-      this.router.navigate(['/play']);
+      this.router.navigateByUrl('/play');
     }
   }
 

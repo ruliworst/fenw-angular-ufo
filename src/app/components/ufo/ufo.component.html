@@ -1,1 +1,3 @@
-<img src="../../../assets/ufo.png" alt="UFO" class="ufo" [style.top.px]="height" [style.left.px]="left" [style.bottom.px]="bottom"/>
+<div *ngFor="let ufo of ufoService.ufos">
+  <img src="{{ ufo.src }}" class="ufo" [style.top.px]="ufo.top" [style.left.px]="ufo.left" [style.bottom.px]="ufo.bottom" />
+</div>
