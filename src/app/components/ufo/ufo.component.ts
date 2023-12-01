@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Ufo } from 'src/app/models/ufo.model';
 import { PlayService } from 'src/app/services/play-service';
 import { PreferencesService } from 'src/app/services/preferences-service';
@@ -9,7 +9,7 @@ import { UfoService } from 'src/app/services/ufo-service';
   templateUrl: './ufo.component.html',
   styleUrls: ['./ufo.component.css']
 })
-export class UfoComponent implements OnInit {
+export class UfoComponent implements OnInit, OnDestroy {
   intervals : any[] = [];
 
   constructor(public ufoService : UfoService) { }
@@ -26,5 +26,9 @@ export class UfoComponent implements OnInit {
     }
 
     ufo.left = ufo.left + ufo.step;
+  }
+
+  ngOnDestroy(): void {
+    this.intervals.forEach(i => clearInterval(i));
   }
 }

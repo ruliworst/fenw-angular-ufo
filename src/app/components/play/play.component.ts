@@ -20,7 +20,6 @@ export class PlayComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.missileService.ngOnInit();
     this.time = this.preferencesService.playTime;
     this.updateTimePID = setInterval(() => this.updateTime(), 1000);
   }
