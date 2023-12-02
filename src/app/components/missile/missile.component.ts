@@ -32,19 +32,19 @@ export class MissileComponent implements OnInit, OnDestroy {
   }
 
   moveRight() {
-    if (this.missile.left + this.missile.width + 8 < window.innerWidth && this.missile.launched) {
+    if (this.missile.left + this.missile.width + 8 < window.innerWidth && !this.missile.launched) {
       this.missile.left += this.step;
     }
   }
 
   moveLeft() {  
-    if (this.missile.left > 0 && this.missile.launched) {
+    if (this.missile.left > 0 && !this.missile.launched) {
       this.missile.left -= this.step;
     }
   } 
 
   launch() {
-    if (this.missile.launched) {
+    if (!this.missile.launched) {
       this.missile.launched = true;
       this.interval = setInterval(() => {
         const upperLimit = this.playService.upperLimit;
