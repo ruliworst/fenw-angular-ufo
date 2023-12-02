@@ -2,7 +2,6 @@ import { EventEmitter, Injectable } from "@angular/core";
 import { UfoService } from "./ufo-service";
 import { MissileService } from "./missile-service";
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -10,9 +9,15 @@ export class PlayService {
   private _headerHeight = 120;
   private _score = 0;
 
+  private ufoService : UfoService;
+  private missileService : MissileService;
+
   scoreChanged = new EventEmitter<number>();
 
-  constructor(private ufoService : UfoService, private missileService : MissileService) { }
+  constructor(ufoService : UfoService, missileService : MissileService) { 
+    this.ufoService = ufoService;
+    this.missileService = missileService;
+  }
 
   get upperLimit() {
     return window.innerHeight - this._headerHeight;
