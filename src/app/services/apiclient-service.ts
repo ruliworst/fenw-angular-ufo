@@ -9,7 +9,7 @@ import { PreferencesService } from './preferences-service';
 export class ApiClientService {
   private baseURL = "http://fenw.etsisi.upm.es:10000"
 
-  constructor(private http: HttpClient, private preferencesService : PreferencesService) { }
+  constructor(private http: HttpClient) { }
 
   registerUser(user: any) : Observable<any> {
     const username = user["name"]
@@ -63,25 +63,26 @@ export class ApiClientService {
 
   saveRecord(record : any) {
     const token = sessionStorage.getItem("token");
-    const body = new URLSearchParams();
-    body.set("punctuation", record["punctuation"]);
-    body.set("ufos", record["ufos"]);
-    body.set("disposedTime", record["disposedTime"]);
-
     if (token != null) {
-      const headers = new HttpHeaders().set("Authorization", token);
+      const params = new HttpParams()
+        .set("punctuation", record["punctuation"])
+        .set("ufos", record["ufos"])
+        .set("disposedTime", record["disposedTime"]);
 
-      return this.http.post(`${this.baseURL}/records`, body.toString(), { headers })
+      const headers = new HttpHeaders()
+        .set('Content-Type', 'application/x-www-form-urlencoded')
+        .set("Authorization", token);
+
+      return this.http.post(`${this.baseURL}/records`, params.toString(), { headers, params })
         .pipe(
           tap(() => alert("The record was saved successfully.")),
           catchError(postError => {
-            alert("It was not possible to save the record.")
             console.error('Error when trying to post record.', postError);
             return of();
-          }));
-    }
+          })
+        );
+      }
 
     return of();
-
   }
 }

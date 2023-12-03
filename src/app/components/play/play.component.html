@@ -1,4 +1,4 @@
-<div id="gameBoard" class="game-board">
+<div *ngIf="!isGameOver; else saveGameTemplate" id="gameBoard" class="game-board">
   <div *ngFor="let ufo of ufos">
     <img src="{{ ufo.src }}" class="ufo" #ufoRef [style.bottom.px]="ufo.bottom" [style.left.px]="ufo.left"/>
   </div>
@@ -10,3 +10,11 @@
   </div>
   <img src="{{ missile.src }}" class="missile" #missileRef [style.left.px]="missile.left"/>
 </div>
+<ng-template #saveGameTemplate>
+  <div id="scoreBoard" class="score-board d-flex flex-column align-items-center justify-content-center" style="width:200px;height:300px;top:100px;position:relative;">
+    <h4>Punctuation</h4>
+    <p id="punctuation" class="punctuation text-center rounded fs-4">{{ score }}</p>
+    <button *ngIf="authService.isAuthenticated" class="btn bg-black text-white restart-button mb-3" (click)="saveRecord()">Save record</button>
+    <button class="btn bg-black text-white restart-button" (click)="restart()">Restart</button>
+  </div>
+</ng-template>

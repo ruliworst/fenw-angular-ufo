@@ -1,6 +1,8 @@
 import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, QueryList, Renderer2, ViewChild, ViewChildren } from '@angular/core';
 import { Missile } from 'src/app/models/missile.model';
 import { Ufo } from 'src/app/models/ufo.model';
+import { ApiClientService } from 'src/app/services/apiclient-service';
+import { AuthService } from 'src/app/services/auth-service';
 import { PreferencesService } from 'src/app/services/preferences-service';
 
 @Component({
@@ -15,6 +17,7 @@ export class PlayComponent implements OnInit, OnDestroy, AfterViewInit {
   updateTimePID : any;
   score : number = 0;
   headerHeight = 120;
+  isGameOver : boolean = false;
 
   missile : Missile;
   missileInterval : any;
@@ -23,7 +26,7 @@ export class PlayComponent implements OnInit, OnDestroy, AfterViewInit {
   ufos : Ufo[] = [];
   ufoIntervals : any[] = [];
 
-  constructor(private preferencesService : PreferencesService, private renderer : Renderer2) {
+  constructor(private preferencesService : PreferencesService, private renderer : Renderer2, private apiClientService : ApiClientService, public authService : AuthService) {
     this.missile = new Missile(this.missileRef, this.renderer);
     this.initializeUfos();
   }
@@ -69,30 +72,34 @@ export class PlayComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   gameOver() {
+    this.isGameOver = true;
     clearInterval(this.updateTimePID);
     clearInterval(this.missileInterval);
     this.ufoIntervals.forEach(i => clearInterval(i));
   }
 
   launch() {
-    if (this.missileInterval != null) {
-      this.stopMissile();
+    if (!this.missile.launched && !this.isGameOver) {
+      if (this.missileInterval != null) {
+        this.stopMissile();
+      }
+  
+      this.missileInterval = setInterval(() => {
+        this.missile.launched = true;
+  
+        if (this.checkHit()) {
+          this.stopMissile();
+          this.addHitPunctuation();
+        }
+  
+        if (this.missile.isMissileAtTop()) {
+          this.stopMissile();
+          this.substractFailPunctuation();
+        } else {
+          this.missile.moveUp();
+        }
+      }, 25); 
     }
-    this.missileInterval = setInterval(() => {
-      this.missile.launched = true;
-
-      if (this.checkHit()) {
-        this.stopMissile();
-        this.addHitPunctuation();
-      }
-
-      if (this.missile.isMissileAtTop()) {
-        this.stopMissile();
-        this.substractFailPunctuation();
-      } else {
-        this.missile.moveUp();
-      }
-    }, 25); 
   }
 
   stopMissile() {
@@ -138,6 +145,23 @@ export class PlayComponent implements OnInit, OnDestroy, AfterViewInit {
 
   substractFailPunctuation() {
     this.score -= 25;
+  }
+
+  restart() {
+    location.reload();
+  }
+
+  saveRecord() {
+    const record = {
+      punctuation: this.score,
+      ufos: this.preferencesService.ufosNumber,
+      disposedTime: this.preferencesService.playTime,
+      username: sessionStorage.getItem("username"),
+      recordDate: new Date().toLocaleDateString()
+    }
+    
+    const request = this.apiClientService.saveRecord(record)
+    request.subscribe(value => console.log(value))
   }
 
   ngOnDestroy(): void {

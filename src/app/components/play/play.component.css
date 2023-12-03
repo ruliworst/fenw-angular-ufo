@@ -38,3 +38,8 @@
   width: 50px;
   position: absolute;
 }
+
+.restart-button:hover {
+  background-color: #fff!important;
+  color: black!important;
+}
