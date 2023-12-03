@@ -1,6 +1,6 @@
 <div id="gameBoard" class="game-board">
   <div *ngFor="let ufo of ufos">
-    <img src="{{ ufo.src }}" class="ufo" [style.top.px]="ufo.top" [style.left.px]="ufo.left" [style.bottom.px]="ufo.bottom" [style.height.px]="ufo.height" [style.width.px]="ufo.width" />
+    <img src="{{ ufo.src }}" class="ufo" #ufoRef [style.bottom.px]="ufo.bottom" [style.left.px]="ufo.left"/>
   </div>
   <div id="scoreBoard" class="score-board d-flex flex-column align-items-center justify-content-center">
     <h4>Time left</h4>
@@ -8,5 +8,5 @@
     <h4>Punctuation</h4>
     <p id="punctuation" class="punctuation text-center rounded fs-4">{{ score }}</p>
   </div>
-  <img src="{{ missile.src }}" class="missile" [style.left.px]="missile.left" [style.bottom.px]="missile.bottom" [style.height.px]="missile.height" [style.width.px]="missile.width" />
+  <img src="{{ missile.src }}" class="missile" #missileRef [style.left.px]="missile.left"/>
 </div>

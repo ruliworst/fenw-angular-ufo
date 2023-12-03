@@ -10,7 +10,6 @@ import { PlayComponent } from './components/play/play.component';
 import { AppService } from './services/app-service';
 import { AuthService } from './services/auth-service';
 import { PreferencesService } from './services/preferences-service';
-import { MissileService } from './services/missile-service';
 
 @NgModule({
   declarations: [
@@ -28,7 +27,6 @@ import { MissileService } from './services/missile-service';
     AppService,
     AuthService,
     PreferencesService,
-    MissileService
   ],
   bootstrap: [
     AppComponent, 
