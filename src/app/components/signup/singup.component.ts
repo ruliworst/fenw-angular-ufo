@@ -36,9 +36,7 @@ export class SignupComponent {
       return
     }
 
-    this.apiClient
-      .registerUser(profile)
-      .subscribe({complete: console.log});
+    this.apiClient.registerUser(profile);
     this.profileForm.reset();
   }
 
@@ -49,7 +47,7 @@ export class SignupComponent {
     if (name !== undefined && name !== "" && name !== null) {
       this.apiClient.getUsername(name)
         .subscribe(response => {
-          if (response.status === 200) alert("The username already exists. Change it.")
+          if (response.status === 200) alert("The username already exists. Change it.");
         })
     }
   }
