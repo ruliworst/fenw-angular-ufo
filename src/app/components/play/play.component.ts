@@ -24,7 +24,6 @@ export class PlayComponent implements OnInit, OnDestroy, AfterViewInit {
   ufoIntervals : any[] = [];
 
   constructor(private preferencesService : PreferencesService, private renderer : Renderer2) {
-    console.log(this.missileRef)
     this.missile = new Missile(this.missileRef, this.renderer);
     this.initializeUfos();
   }
@@ -39,7 +38,6 @@ export class PlayComponent implements OnInit, OnDestroy, AfterViewInit {
     this.updateTimePID = setInterval(() => this.updateTime(), 1000);
 
     this.ufoIntervals = this.ufos.map(ufo => setInterval(() => ufo.moveUfo()), 25);
-    console.log(this.ufoIntervals)
   }
 
   private initializeUfos(): void {
@@ -115,16 +113,12 @@ export class PlayComponent implements OnInit, OnDestroy, AfterViewInit {
       let missileWidth = this.missile.width;
       let ufoWidth = ufo.width;
 
-      console.log("HorizontalPositionUfo", horizontalPositionUfo,"VerticalPositionUfo",verticalPositionUfo,"HorizontalPositionMissile",horizontalPositionMissile,"VerticalPositionMissile",verticalPositionMissile,"MissileHeight",missileHeight,"MissileWidth",missileWidth,"UfoWidth",ufoWidth)
-
       let hit = (verticalPositionMissile + missileHeight >= verticalPositionUfo) &&
               (horizontalPositionMissile + missileWidth / 2 >= horizontalPositionUfo) && 
               (horizontalPositionMissile + missileWidth / 2 <= horizontalPositionUfo + ufoWidth) &&
               (verticalPositionMissile <= verticalPositionUfo);
 
       if (hit) {
-        console.log("HIT")
-
         ufo.src = '../../assets/explosion.gif';
         setTimeout(() => ufo.src = '../../assets/ufo.png', 2000);
         return true;

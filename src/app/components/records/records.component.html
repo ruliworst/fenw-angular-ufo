@@ -1,0 +1,55 @@
+<div class="container d-flex align-items-center justify-content-center h-100">
+  <div [ngClass]="{
+    'col-md-6': authService.isAuthenticated, 
+    'col-md-10': !authService.isAuthenticated
+    }" class="d-flex flex-column align-items-center h-100">
+    <h2>Global Records</h2>
+    <table id="globalRecords" class="col-md-6 border border-primary bg-light">
+      <thead>
+        <tr class="fs-5 text-center">
+          <th></th>
+          <th>User</th>
+          <th>Points</th>
+          <th>UFOs</th>
+          <th>Secs.</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let globalRecord of globalRecords; let i = index">
+          <th class="px-2">{{ i + 1 }}</th>
+          <td class="px-2">{{ globalRecord["username"] }}</td>
+          <td class="px-2">{{ globalRecord["punctuation"] }}</td>
+          <td class="px-2">{{ globalRecord["ufos"] }}</td>
+          <td class="px-2">{{ globalRecord["disposedTime"] }}</td>
+          <td class="px-2">{{ globalRecord["recordDate"] }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div *ngIf="authService.isAuthenticated;" class="col-md-6 d-flex flex-column align-items-center h-100">
+    <h2>Personal Records</h2>
+    <table id="personalRecords" class="col-md-6 border border-primary bg-light">
+      <thead>
+        <tr class="fs-5 text-center">
+          <th></th>
+          <th>User</th>
+          <th>Points</th>
+          <th>UFOs</th>
+          <th>Secs.</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let personalRecord of personalRecords; let i = index">
+          <th class="px-2">{{ i + 1 }}</th>
+          <td class="px-2">{{ personalRecord["username"] }}</td>
+          <td class="px-2">{{ personalRecord["punctuation"] }}</td>
+          <td class="px-2">{{ personalRecord["ufos"] }}</td>
+          <td class="px-2">{{ personalRecord["disposedTime"] }}</td>
+          <td class="px-2">{{ personalRecord["recordDate"] }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

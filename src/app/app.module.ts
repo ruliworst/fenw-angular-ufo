@@ -10,12 +10,14 @@ import { PlayComponent } from './components/play/play.component';
 import { AppService } from './services/app-service';
 import { AuthService } from './services/auth-service';
 import { PreferencesService } from './services/preferences-service';
+import { RecordsComponent } from './components/records/records.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavigationBarComponent,
-    PlayComponent
+    PlayComponent,
+    RecordsComponent
   ],
   imports: [
     BrowserModule,

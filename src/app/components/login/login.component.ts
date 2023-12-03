@@ -39,6 +39,7 @@ export class LoginComponent implements OnInit {
     const passwd = profile["password"]
     
     if (name != null && passwd != null) {
+      sessionStorage.setItem("username", name);
       this.authService.login(name, passwd);
       this.profileForm.reset();
     }

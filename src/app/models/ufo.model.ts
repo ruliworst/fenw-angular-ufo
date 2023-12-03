@@ -39,7 +39,6 @@ export class Ufo {
   }
 
   getLeft(): number {
-    console.log(this.ufoRef.nativeElement.offsetLeft)
     return this.ufoRef.nativeElement.offsetLeft;
   }
 

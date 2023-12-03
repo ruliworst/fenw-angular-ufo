@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, of, tap } from 'rxjs';
+import { AuthService } from './auth-service';
 
 @Injectable({
   providedIn: 'root',
@@ -40,5 +41,22 @@ export class ApiClientService {
 
   getUsername(username: string) {
     return this.http.get(`${this.baseURL}/users/${username}`, { observe: 'response' });
+  }
+
+  getGlobalRecords() {
+    return this.http.get(`${this.baseURL}/records`, { observe: 'body' });
+  }
+
+  getPersonalRecords() {
+    const token = sessionStorage.getItem("token");
+    const username = sessionStorage.getItem("username");
+
+    if (token != null && username != null) {
+      const headers = new HttpHeaders().set("Authorization", token);
+
+      return this.http.get(`${this.baseURL}/records/${username}`, { observe: 'body', headers });
+    }
+
+    return of();
   }
 }
